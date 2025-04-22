@@ -17,18 +17,15 @@ def index():
 @app.route('/chat', methods=['POST'])
 def chat():
     user_message = request.form['message'].lower()
-    response = {"url": None, "error": None}
 
     # Search through all URL entries
     for entry in url_data:
         if any(keyword in user_message for keyword in entry['keywords']):
-            response['url'] = entry['url']
-            break
+            return jsonify({"url": entry['url']})  # 👈 Clean response
 
-    if not response['url']:
-        response['error'] = "No matching URL found"
+    # If no match found
+    return jsonify({"url": "Not Found"})  # 👈 Still only 'url' in response
 
-    return jsonify(response)
 
 if __name__ == '__main__':
     print("Starting server...")
