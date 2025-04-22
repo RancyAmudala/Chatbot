@@ -7,5 +7,17 @@
       "keywords": ["cloud", "cloudforge"],
       "url": "https://console.forge.lmig.com/projects/CIMCCLAIMS"
     }
+    {
+      "keywords": ["fb", "facebook"],
+      "url": "https://www.facebook.com/login/"
+    },
+    {
+      "keywords": ["Insta", "Instagram"],
+      "url": "https://www.instagram.com/accounts/login/?hl=en"
+    }
+    {
+      "keywords": ["utube", "youtube"],
+      "url": "https://www.youtube.com/"
+    }
   ]
    
