@@ -1,62 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panda App</title>
-    <style>
-        /* Add CSS to center the content */
-        body {
-            display: flex;
-            justify-content: center; /* Horizontally center the content */
-            align-items: center;     /* Vertically center the content */
-            height: 100vh;           /* Full viewport height */
-            margin: 0;               /* Remove default margin */
-            font-family: Arial, sans-serif;  /* Optional: Set font */
-            background-color: #f0f0f0;      /* Optional: Set background color */
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panda Chatbot</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #ffdee9, #ffc2d7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
-        .container {
-            text-align: center;      /* Center text inside the container */
-            padding: 20px;           /* Optional: Add some padding */
-            background-color: white; /* Optional: Set background color for the form */
-            border-radius: 8px;      /* Optional: Add rounded corners */
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add shadow effect */
-        }
+    .chat-container {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
 
-        h1 {
-            font-size: 2.5em;        /* Set heading size */
-            color: #333;             /* Set heading color */
-        }
+    h1 {
+      color: #ff69b4;
+      margin-bottom: 10px;
+    }
 
-        p {
-            font-size: 1.2em;        /* Set paragraph font size */
-            color: #666;             /* Set paragraph color */
-        }
+    p {
+      color: #888;
+    }
 
-        form {
-            margin-top: 20px;
-        }
+    input[type="text"] {
+      padding: 10px;
+      width: 100%;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+      margin-top: 15px;
+    }
 
-        #result {
-            margin-top: 20px;
-        }
-    </style>
+    .chat-send {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .chat-send:hover {
+      background-color: #ff85c1;
+    }
+
+    #result {
+      margin-top: 20px;
+    }
+
+    .chat-bubble {
+      background-color: #ffe6f0;
+      padding: 15px;
+      border-radius: 15px;
+      margin-top: 10px;
+      text-align: left;
+      font-size: 0.95em;
+      color: #444;
+      position: relative;
+    }
+
+    .chat-bubble::before {
+      content: "🤖";
+      position: absolute;
+      top: -15px;
+      left: -10px;
+      font-size: 1.2em;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to the Panda App!</h1>
-        <p>Enter a message below, and we'll find a matching URL for you:</p>
-        
-        <!-- Form to send message -->
-        <form action="/chat" method="POST">
-            <label for="message">Enter your message:</label><br>
-            <input type="text" id="message" name="message" required><br><br>
-            <input type="submit" value="Send Message">
-        </form>
+  <div class="chat-container">
+    <h1>💬 Panda Chatbot</h1>
+    <p>Ask me something!</p>
 
-        <!-- Result section to display the response -->
-        <div id="result"></div>
-    </div>
+    <input type="text" id="message" placeholder="Type a keyword..." required />
+    <button class="chat-send" onclick="sendMessage()">💌 Send</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    async function sendMessage() {
+      const msgInput = document.getElementById('message');
+      const resultDiv = document.getElementById('result');
+      const message = msgInput.value.trim();
+
+      if (!message) return;
+
+      // Clear input
+      msgInput.value = '';
+
+      // Add loading bubble
+      resultDiv.innerHTML = `<div class="chat-bubble">⏳ Thinking...</div>`;
+
+      try {
+        const response = await fetch('/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `message=${encodeURIComponent(message)}`
+        });
+
+        const text = await response.text();
+
+        resultDiv.innerHTML = `
+          <div class="chat-bubble">
+            ${text}
+          </div>
+        `;
+      } catch (err) {
+        resultDiv.innerHTML = `
+          <div class="chat-bubble">⚠️ Something went wrong. Try again!</div>
+        `;
+        console.error(err);
+      }
+    }
+  </script>
 </body>
 </html>
