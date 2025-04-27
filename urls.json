@@ -8,15 +8,15 @@
       "url": "https://render.com/"
     },
     {
-      "keywords": ["fb", "facebook"],
+      "keywords": ["fb", "facebook", "Facebook"],
       "url": "https://www.facebook.com/login/"
     },
     {
-      "keywords": ["Insta", "Instagram"],
+      "keywords": ["insta", "Instagram", "Insta"],
       "url": "https://www.instagram.com/accounts/login/?hl=en"
     },
     {
-      "keywords": ["utube", "youtube"],
+      "keywords": ["utube", "youtube", "Youtube"],
       "url": "https://www.youtube.com/"
     },
     {
@@ -34,6 +34,14 @@
     {
       "keywords": ["replicon", "dxc replicon"],
       "url": "https://na12.replicon.com/DXCTechnology/my/timesheet/"
+    },
+    {
+      "keywords": ["Teams", "Microsoft teams"],
+      "url": "https://www.microsoft.com/en-in/microsoft-teams/download-app?msockid=0726c699fb1068343fbfd665ff106e2e"
+    },
+    {
+      "keywords": ["outlook", "microsoft outlook"],
+      "url": "https://www.microsoft.com/en-us/microsoft-365/outlook/outlook-for-windows?msockid=0726c699fb1068343fbfd665ff106e2e"
     }
   ]
    
