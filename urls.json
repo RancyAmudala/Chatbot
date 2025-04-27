@@ -16,6 +16,22 @@
       "url": "https://www.instagram.com/accounts/login/?hl=en"
     },
     {
+      "keywords": ["Whatsapp", "whatsapp", "whats app"],
+      "url": "https://web.whatsapp.com/"
+    },
+    {
+      "keywords": ["Amazon", "amazon"],
+      "url": "https://www.amazon.in/"
+    },
+    {
+      "keywords": ["chatgpt", "Chatgpt"],
+      "url": "https://chatgpt.com/c/680e4142-d940-8001-baba-f0c136ea2c5d"
+    },
+    {
+      "keywords": ["flipkart", "Flipkart"],
+      "url": "https://www.flipkart.com/"
+    },
+    {
       "keywords": ["utube", "youtube", "Youtube"],
       "url": "https://www.youtube.com/"
     },
