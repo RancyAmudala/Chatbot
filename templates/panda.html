@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Panda Chatbot</title>
+  <title>URL Chatbot</title>
   <style>
     body {
-      background: linear-gradient(to right, #ffdee9, #ffc2d7);
+      background: linear-gradient(to right, #4B0082, #ffc2d7);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -26,7 +26,7 @@
     }
 
     h1 {
-      color: #ff69b4;
+      color: #4B0082;
       margin-bottom: 10px;
     }
 
@@ -46,7 +46,7 @@
     .chat-send {
       margin-top: 10px;
       padding: 10px 20px;
-      background-color: #ff69b4;
+      background-color: #4B0082;
       color: white;
       border: none;
       border-radius: 20px;
@@ -55,7 +55,7 @@
     }
 
     .chat-send:hover {
-      background-color: #ff85c1;
+      background-color: #3a006f;
     }
 
     #result {
@@ -80,15 +80,31 @@
       left: -10px;
       font-size: 1.2em;
     }
+
+    .chat-bubble button {
+      margin-right: 8px;
+      margin-top: 10px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 8px;
+      background-color: #4B0082;
+      color: white;
+      cursor: pointer;
+      font-size: 0.85em;
+    }
+
+    .chat-bubble button:hover {
+      background-color: #3a006f;
+    }
   </style>
 </head>
 <body>
   <div class="chat-container">
-    <h1>💬 Panda Chatbot</h1>
+    <h1>💬 URL Chatbot</h1>
     <p>Ask me something!</p>
 
     <input type="text" id="message" placeholder="Type a keyword..." required />
-    <button class="chat-send" onclick="sendMessage()">💌 Send</button>
+    <button class="chat-send" onclick="sendMessage()">Send</button>
 
     <div id="result"></div>
   </div>
@@ -101,11 +117,8 @@
 
       if (!message) return;
 
-      // Clear input
       msgInput.value = '';
-
-      // Add loading bubble
-      resultDiv.innerHTML = `<div class="chat-bubble">⏳ Thinking...</div>`;
+      resultDiv.innerHTML = '<div class="chat-bubble">⏳ Thinking...</div>';
 
       try {
         const response = await fetch('/chat', {
@@ -117,18 +130,31 @@
         });
 
         const text = await response.text();
+        const data = JSON.parse(text);
 
-        resultDiv.innerHTML = `
-          <div class="chat-bubble">
-            ${text}
-          </div>
-        `;
+        if (data.url === "Not Found") {
+          resultDiv.innerHTML = '<div class="chat-bubble">❌ No matching URL found.</div>';
+        } else {
+          resultDiv.innerHTML =resultDiv.innerHTML = `
+<div class="chat-bubble">
+  🔗 <a href="${data.url}" target="_blank">${data.url}</a><br><br>
+  <button onclick="copyToClipboard('${data.url}')">📋 Copy Link</button>
+  <button onclick="window.open('${data.url}', '_blank')">🌐 Open in New Tab</button>
+</div>
+`;
+
+          ;
+        }
       } catch (err) {
-        resultDiv.innerHTML = `
-          <div class="chat-bubble">⚠️ Something went wrong. Try again!</div>
-        `;
+        resultDiv.innerHTML = '<div class="chat-bubble">⚠️ Something went wrong. Try again!</div>';
         console.error(err);
       }
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text)
+        .then(() => alert("Link copied to clipboard!"))
+        .catch(err => alert("Failed to copy link."));
     }
   </script>
 </body>
